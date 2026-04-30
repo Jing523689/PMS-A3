@@ -1,0 +1,129 @@
+<!-- Inventory toolbar: title, help widget, and loading progress indicator. -->
+<ion-header class="app-top-header" [translucent]="true">
+  <ion-toolbar class="app-top-toolbar">
+    <ion-title>Inventory</ion-title>
+    <ion-buttons slot="end">
+      <app-help-widget title="Inventory help" [message]="helpMessage"></app-help-widget>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
+</ion-header>
+
+<!-- Inventory content: pull-to-refresh, exact search, filters, and result cards. -->
+<ion-content [fullscreen]="true" class="glass-page">
+  <!-- Native Ionic refresher supports mobile pull-down reload behavior. -->
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <main class="page-shell page-container inventory-page">
+    <!-- Search panel keeps all discovery controls together at the top of the list. -->
+    <ion-card class="surface-card search-panel">
+      <ion-card-content>
+        <div class="toolbar-row">
+          <div>
+            <h1>Inventory records</h1>
+            <p>Enter a full item name, then tap Search Item. Typing alone will not change the results.</p>
+          </div>
+          <ion-button fill="clear" class="mini-refresh" (click)="loadItems()" [disabled]="loading" aria-label="Refresh inventory">
+            <ion-icon slot="icon-only" name="refresh-outline"></ion-icon>
+          </ion-button>
+        </div>
+
+        <!-- The searchbar captures text only; actual search starts from the button below. -->
+        <ion-searchbar
+          [(ngModel)]="searchTerm"
+          (ionClear)="resetView()"
+          placeholder="Enter full item name"
+          show-clear-button="focus"
+          animated="true">
+        </ion-searchbar>
+
+        <!-- Segment filters let users narrow results without leaving the inventory page. -->
+        <ion-segment [(ngModel)]="filter" (ionChange)="applyFilters()" [scrollable]="true" value="all">
+          <ion-segment-button value="all">
+            <ion-label>All</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="featured">
+            <ion-icon name="star-outline"></ion-icon>
+            <ion-label>Featured</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="low">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <ion-label>Low</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="out">
+            <ion-icon name="close-circle-outline"></ion-icon>
+            <ion-label>Out</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+
+        <!-- Explicit actions make the exact-search behavior clear and predictable. -->
+        <div class="button-row search-actions">
+          <ion-button expand="block" class="primary-action" (click)="searchExactItem()" [disabled]="loading">
+            <ion-icon slot="start" name="search-outline"></ion-icon>
+            Search Item
+          </ion-button>
+          <ion-button expand="block" fill="outline" class="primary-action" (click)="resetView()" [disabled]="loading">
+            Reset View
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Loading state prevents users from wondering whether the API request is running. -->
+    <div class="loading-box" *ngIf="loading">
+      <ion-spinner name="crescent"></ion-spinner>
+      <span>Loading inventory...</span>
+    </div>
+
+    <!-- Result section switches copy between the full list and exact-search result. -->
+    <section *ngIf="!loading" class="page-section">
+      <div class="section-heading">
+        <div>
+          <h2>{{ searchAttempted ? 'Search result' : 'Current records' }}</h2>
+          <p>{{ searchAttempted ? 'Only the item returned by Search Item is shown.' : 'Typing in the search box will not filter records until Search Item is tapped.' }}</p>
+        </div>
+      </div>
+
+      <!-- Empty and not-found states use different messages for better guidance. -->
+      <div *ngIf="visibleItems.length === 0" class="empty-state" [ngClass]="{ 'not-found-state': searchNotFound }">
+        <ion-icon [name]="searchNotFound ? 'alert-circle-outline' : 'file-tray-outline'"></ion-icon>
+        <h3>{{ searchNotFound ? 'Item not found' : 'No records to display' }}</h3>
+        <p>{{ searchNotFound ? 'The search text must match the full item name. Check the spelling or reset the view.' : 'No inventory records are available for the current filter.' }}</p>
+      </div>
+
+      <!-- Responsive card grid adapts from phone width to wider browser previews. -->
+      <div class="item-grid" *ngIf="visibleItems.length > 0">
+        <ion-card class="item-card" *ngFor="let item of visibleItems; trackBy: trackByItemName">
+          <ion-card-header>
+            <div class="card-title-row">
+              <div>
+                <ion-card-title>{{ item.itemName || 'Unnamed Item' }}</ion-card-title>
+                <ion-card-subtitle>{{ item.category }}</ion-card-subtitle>
+              </div>
+              <ion-icon name="star" class="card-feature-icon" *ngIf="item.featuredItem === 1"></ion-icon>
+            </div>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="item-meta">
+              <div class="meta-pill"><span>Qty</span><strong>{{ item.quantity }}</strong></div>
+              <div class="meta-pill"><span>Price</span><strong>{{ item.price }}</strong></div>
+              <div class="meta-pill"><span>Supplier</span><strong>{{ item.supplierName || '-' }}</strong></div>
+              <div class="meta-pill"><span>ID</span><strong>{{ item.itemId || '-' }}</strong></div>
+            </div>
+            <div class="status-row">
+              <span class="status-chip" [ngClass]="statusClass(item)">{{ item.stockStatus }}</span>
+              <span class="status-chip featured-chip" *ngIf="item.featuredItem === 1">Featured</span>
+            </div>
+            <p class="note-text" *ngIf="item.specialNote">{{ item.specialNote }}</p>
+            <ion-button expand="block" fill="clear" class="manage-link" (click)="manageItem(item)">
+              Manage
+              <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </section>
+  </main>
+</ion-content>

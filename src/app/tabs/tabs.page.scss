@@ -1,1 +1,139 @@
+/* Tab bar styles define the bottom navigation dock and active states. */
+:host {
+  background: transparent;
+  --nav-bg: #ffffff;
+  --nav-border: #dbe4ef;
+  --nav-text: #64748b;
+  --nav-selected: #1d4ed8;
+  --nav-selected-bg: #eff6ff;
+  --nav-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
+  --ion-font-family: "Plus Jakarta Sans", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
 
+ion-tabs {
+  background: #f6f8fb !important;
+}
+
+ion-tab-bar {
+  /* Keep the bar in the normal Ionic tab layout instead of overlaying page content. */
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  min-height: calc(82px + var(--ion-safe-area-bottom, 0px));
+  padding: 9px 8px calc(10px + var(--ion-safe-area-bottom, 0px));
+  margin: 0;
+  --background: var(--nav-bg) !important;
+  --border: 0;
+  background: var(--nav-bg) !important;
+  border-top: 1px solid var(--nav-border) !important;
+  box-shadow: var(--nav-shadow) !important;
+  overflow: visible !important;
+  contain: none !important;
+}
+
+ion-tab-bar::after {
+  display: none;
+}
+
+ion-tab-button {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 64px;
+  margin: 0 2px;
+  --background: transparent;
+  --background-focused: transparent;
+  --background-focused-opacity: 0;
+  --background-hover: transparent;
+  --background-activated: transparent;
+  --color: var(--nav-text);
+  --color-selected: var(--nav-selected);
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --ripple-color: rgba(37, 99, 235, 0.10);
+  color: var(--nav-text);
+  border-radius: 16px;
+  overflow: visible !important;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+ion-tab-button::part(native) {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  overflow: visible !important;
+  padding: 7px 2px 6px;
+}
+
+ion-tab-button.tab-selected {
+  color: var(--nav-selected);
+  background: var(--nav-selected-bg);
+  transform: none;
+  box-shadow: inset 0 0 0 1px #bfdbfe;
+}
+
+ion-tab-button ion-icon {
+  flex: 0 0 auto;
+  font-size: 21px;
+  margin: 0;
+  color: currentColor;
+  transition: transform 180ms ease, color 180ms ease;
+}
+
+ion-tab-button ion-label {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-height: 16px;
+  overflow: visible !important;
+  text-align: center;
+  font-family: var(--ion-font-family) !important;
+  font-size: 11.5px;
+  font-weight: 750;
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+  color: currentColor;
+  white-space: nowrap;
+  text-overflow: clip;
+}
+
+ion-tab-button.tab-selected ion-icon {
+  transform: translateY(-1px);
+}
+
+ion-tab-button.tab-selected ion-label {
+  font-weight: 850;
+}
+
+@media (max-width: 380px) {
+  ion-tab-bar {
+    padding-inline: 5px;
+  }
+
+  ion-tab-button {
+    height: 62px;
+    margin: 0 1px;
+    border-radius: 14px;
+  }
+
+  ion-tab-button::part(native) {
+    gap: 3px;
+    padding-inline: 1px;
+  }
+
+  ion-tab-button ion-icon {
+    font-size: 20px;
+  }
+
+  ion-tab-button ion-label {
+    font-size: 10.5px;
+    letter-spacing: -0.025em;
+  }
+}

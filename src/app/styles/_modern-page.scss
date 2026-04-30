@@ -1,0 +1,2946 @@
+/* Global design tokens: typography, colour, and state variables used across every tab. */
+:host {
+  display: block;
+  font-family: var(--ion-font-family, "Plus Jakarta Sans", "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --page-bg: #f5f7fb;
+  --card-bg: rgba(255, 255, 255, 0.94);
+  --card-border: rgba(148, 163, 184, 0.2);
+  --text-strong: #0f172a;
+  --text-soft: #64748b;
+  --text-muted: #94a3b8;
+  --accent: #2563eb;
+  --accent-dark: #1d4ed8;
+  --accent-soft: rgba(37, 99, 235, 0.11);
+  --success-soft: rgba(22, 163, 74, 0.13);
+  --warning-soft: rgba(245, 158, 11, 0.16);
+  --danger-soft: rgba(220, 38, 38, 0.12);
+  --purple-soft: rgba(124, 58, 237, 0.12);
+}
+
+/* Page background: light application surface with subtle depth for mobile readability. */
+ion-content {
+  --background:
+    radial-gradient(circle at 14% -8%, rgba(37, 99, 235, 0.16), transparent 26%),
+    radial-gradient(circle at 92% 0%, rgba(14, 165, 233, 0.13), transparent 30%),
+    linear-gradient(180deg, #f8fafc 0%, var(--page-bg) 38%, #eef3fb 100%);
+}
+
+/* Toolbar styling: keeps the header consistent while remaining compact on phones. */
+.app-toolbar {
+  --background: rgba(255, 255, 255, 0.86);
+  --border-color: rgba(148, 163, 184, 0.18);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 1px 0 rgba(148, 163, 184, 0.12);
+}
+
+.app-toolbar ion-title {
+  color: var(--text-strong);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+}
+
+/* Page shell: centralises spacing and bottom padding so tabs never hide content. */
+.page-shell {
+  padding: 18px 16px 112px;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+/* Shared surface treatment used by cards, forms, empty states, and information panels. */
+.surface-card,
+.form-card,
+.empty-state,
+.item-card,
+.info-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 18px 44px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(18px) saturate(155%);
+  -webkit-backdrop-filter: blur(18px) saturate(155%);
+}
+
+.surface-card,
+.form-card {
+  margin: 0 0 16px;
+  border-radius: 28px;
+  overflow: hidden;
+}
+
+.surface-card ion-card-content,
+.form-card ion-card-content {
+  padding: 18px;
+}
+
+/* Header row inside content cards, balancing title copy with compact action buttons. */
+.toolbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 4px;
+}
+
+.toolbar-row h1 {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: clamp(1.2rem, 5vw, 1.8rem);
+  font-weight: 950;
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+}
+
+.toolbar-row p {
+  margin: 6px 0 0;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.mini-refresh {
+  --border-radius: 16px;
+  --color: var(--accent);
+  --background: var(--accent-soft);
+  --background-hover: rgba(37, 99, 235, 0.16);
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+}
+
+/* Searchbar styling: clear touch target, readable placeholder, and no heavy shadow. */
+ion-searchbar {
+  --background: rgba(241, 245, 249, 0.96);
+  --box-shadow: none;
+  --border-radius: 18px;
+  --color: var(--text-strong);
+  --placeholder-color: var(--text-muted);
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+}
+
+/* Section headings create a predictable visual hierarchy between page areas. */
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 24px 2px 12px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: 1.08rem;
+  font-weight: 950;
+  letter-spacing: -0.025em;
+}
+
+.section-heading p {
+  margin: 5px 0 0;
+  color: var(--text-soft);
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+/* Responsive grid: one column on phones, more columns on wider screens. */
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 15px;
+}
+
+/* Inventory card: primary information container for list and featured records. */
+.item-card {
+  position: relative;
+  margin: 0;
+  border-radius: 26px;
+  overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.item-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 5px;
+  background: linear-gradient(90deg, var(--accent), #38bdf8);
+  opacity: 0.82;
+}
+
+.item-card ion-card-header {
+  padding: 20px 18px 8px;
+}
+
+.item-card ion-card-content {
+  padding: 4px 18px 18px;
+}
+
+.card-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.card-feature-icon {
+  padding: 8px;
+  border-radius: 14px;
+  color: #7c3aed;
+  background: var(--purple-soft);
+  font-size: 1.05rem;
+  flex: 0 0 auto;
+}
+
+.item-card ion-card-title {
+  color: var(--text-strong);
+  font-size: 1.08rem;
+  font-weight: 950;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.item-card ion-card-subtitle {
+  margin-top: 7px;
+  color: var(--text-soft);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+/* Metadata pills make numeric and supplier values easy to scan quickly. */
+.item-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  margin: 12px 0 13px;
+}
+
+.meta-pill {
+  min-width: 0;
+  padding: 11px 12px;
+  border-radius: 17px;
+  background: rgba(241, 245, 249, 0.9);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.meta-pill span {
+  display: block;
+  color: var(--text-soft);
+  font-size: 0.72rem;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: 0.035em;
+}
+
+.meta-pill strong {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-strong);
+  font-weight: 950;
+  word-break: break-word;
+}
+
+/* Status row groups stock state and featured state without crowding the card. */
+.status-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.status-chip {
+  min-height: 29px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 950;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.status-in {
+  color: #15803d;
+  background: var(--success-soft);
+}
+
+.status-low {
+  color: #b45309;
+  background: var(--warning-soft);
+}
+
+.status-out {
+  color: #b91c1c;
+  background: var(--danger-soft);
+}
+
+.featured-chip {
+  color: #7c3aed;
+  background: var(--purple-soft);
+}
+
+.note-text {
+  margin: 12px 0 0;
+  padding: 12px;
+  border-radius: 16px;
+  color: var(--text-soft);
+  background: rgba(248, 250, 252, 0.88);
+  border: 1px solid rgba(226, 232, 240, 0.88);
+  line-height: 1.55;
+}
+
+/* Form list reset: removes default list chrome so custom field cards can lead the design. */
+.form-list {
+  background: transparent;
+}
+
+.form-list ion-item {
+  --background: rgba(248, 250, 252, 0.9);
+  --border-color: transparent;
+  --inner-border-width: 0;
+  --padding-start: 15px;
+  --padding-end: 15px;
+  --min-height: 62px;
+  margin-bottom: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+}
+
+.form-list ion-item.item-has-focus {
+  border-color: rgba(37, 99, 235, 0.32);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+}
+
+.form-list ion-label {
+  color: var(--text-soft) !important;
+  font-weight: 850;
+  letter-spacing: -0.01em;
+}
+
+/* Validation note: field-level feedback stays close to the related input. */
+.validation-note {
+  display: block;
+  margin: -6px 0 12px 14px;
+  font-weight: 750;
+}
+
+/* Button rows provide thumb-friendly spacing for primary and secondary actions. */
+.button-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.primary-action {
+  --border-radius: 17px;
+  min-height: 49px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.card-action {
+  margin-top: 14px;
+}
+
+/* Empty states explain what happened and guide the next action. */
+.empty-state {
+  margin: 0;
+  border-radius: 26px;
+  padding: 30px 20px;
+  text-align: center;
+  color: var(--text-soft);
+}
+
+.empty-state ion-icon {
+  font-size: 2.7rem;
+  color: #94a3b8;
+  margin-bottom: 10px;
+}
+
+.empty-state h3 {
+  margin: 0 0 7px;
+  color: var(--text-strong);
+  font-weight: 950;
+  letter-spacing: -0.02em;
+}
+
+.empty-state p {
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* Loading box: combines spinner and message for clear network feedback. */
+.loading-box {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin: 16px 0;
+  color: var(--text-soft);
+  font-weight: 850;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .item-card:hover,
+  .surface-card:hover,
+  .form-card:hover,
+  .info-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 24px 58px rgba(15, 23, 42, 0.12);
+  }
+}
+
+@media (max-width: 640px) {
+  .item-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .surface-card ion-card-content,
+  .form-card ion-card-content {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 460px) {
+  .page-shell {
+    padding: 14px 12px 108px;
+  }
+
+  .button-row {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar-row {
+    align-items: flex-start;
+  }
+}
+
+/* Refined inventory form UI */
+/* Form card: creates a focused data-entry area for Add and Manage pages. */
+.polished-form-card {
+  position: relative;
+  border-radius: 30px;
+  overflow: hidden;
+  border-color: rgba(37, 99, 235, 0.16);
+}
+
+.polished-form-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 6px;
+  background: linear-gradient(90deg, #2563eb, #38bdf8, #8b5cf6);
+  opacity: 0.92;
+}
+
+.inventory-form {
+  display: grid;
+  gap: 16px;
+}
+
+/* Form section: groups related controls into a single mobile-friendly workflow. */
+.form-section-card {
+  position: relative;
+  padding: 16px;
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.82));
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.form-section-card.accent-section {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(37, 99, 235, 0.1), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(248, 250, 252, 0.84));
+}
+
+/* Form section title: number badge and heading help users understand progression. */
+.form-section-title {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: start;
+  margin-bottom: 14px;
+}
+
+.form-section-title.with-action {
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+}
+
+.section-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent), #38bdf8);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 950;
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.22);
+}
+
+.form-section-title h2 {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: 1.06rem;
+  font-weight: 950;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+}
+
+.form-section-title p {
+  margin: 5px 0 0;
+  color: var(--text-soft);
+  font-size: 0.84rem;
+  font-weight: 650;
+  line-height: 1.42;
+}
+
+.refined-form-list {
+  display: grid;
+  gap: 12px;
+}
+
+.refined-form-list ion-item.field-control,
+.search-panel-card ion-item.field-control {
+  --background: rgba(255, 255, 255, 0.82);
+  --border-color: transparent;
+  --inner-border-width: 0;
+  --padding-start: 13px;
+  --padding-end: 13px;
+  --inner-padding-end: 12px;
+  --min-height: 78px;
+  margin: 0;
+  border-radius: 20px;
+  border: 1px solid rgba(203, 213, 225, 0.82);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.045);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.refined-form-list ion-item.field-control.item-has-focus,
+.search-panel-card ion-item.field-control.item-has-focus {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(37, 99, 235, 0.42);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.09), 0 14px 32px rgba(37, 99, 235, 0.09);
+}
+
+/* Field icons improve recognition while preserving label text for accessibility. */
+.field-leading-icon {
+  width: 38px;
+  height: 38px;
+  margin-inline-end: 12px;
+  padding: 9px;
+  border-radius: 15px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  align-self: center;
+}
+
+.field-leading-icon.featured-icon {
+  color: #7c3aed;
+  background: var(--purple-soft);
+}
+
+/* Field labels are intentionally prominent so property names are easy to locate. */
+.field-label-text {
+  display: block;
+  color: var(--text-strong);
+  font-size: 0.86rem;
+  font-weight: 950;
+  letter-spacing: -0.018em;
+  line-height: 1.2;
+}
+
+.field-hint {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-soft);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.28;
+  white-space: normal;
+}
+
+.required-mark {
+  color: #dc2626;
+  font-weight: 950;
+}
+
+/* Value input typography: slightly calmer than labels to keep hierarchy stable. */
+.value-input {
+  --color: var(--text-strong);
+  --placeholder-color: #94a3b8;
+  --placeholder-opacity: 1;
+  font-size: 1rem;
+  font-weight: 850;
+  letter-spacing: -0.015em;
+}
+
+.numeric-value {
+  font-size: 1.08rem;
+  font-weight: 950;
+}
+
+/* Numeric fields use compact cards to pair quantity and price on mobile. */
+.compact-number-field {
+  --min-height: 84px;
+}
+
+.readonly-control {
+  --background: rgba(241, 245, 249, 0.72) !important;
+  border-style: dashed !important;
+}
+
+.readonly-control .field-leading-icon {
+  color: #64748b;
+  background: rgba(100, 116, 139, 0.12);
+}
+
+/* Toggle controls use the same card rhythm as text fields for visual consistency. */
+.toggle-control {
+  --min-height: 74px;
+}
+
+.toggle-control ion-label {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.toggle-control ion-toggle {
+  --track-background: rgba(203, 213, 225, 0.95);
+  --track-background-checked: rgba(37, 99, 235, 0.28);
+  --handle-background-checked: var(--accent);
+  padding-left: 10px;
+}
+
+.textarea-control {
+  --min-height: 128px;
+  align-items: flex-start;
+}
+
+.textarea-control .field-leading-icon {
+  align-self: flex-start;
+  margin-top: 18px;
+}
+
+.textarea-control ion-textarea {
+  --padding-top: 12px;
+  line-height: 1.5;
+}
+
+/* Refined grid controls two-column layout with graceful collapse on narrow screens. */
+.refined-grid {
+  gap: 12px;
+  align-items: start;
+}
+
+.suggest-pill {
+  --border-radius: 999px;
+  --background: rgba(37, 99, 235, 0.1);
+  --background-hover: rgba(37, 99, 235, 0.16);
+  --color: var(--accent);
+  height: 34px;
+  margin: 0;
+  font-weight: 900;
+}
+
+/* Form actions remain clear and reachable after the user completes data entry. */
+.form-actions-row {
+  margin-top: 2px;
+}
+
+.secondary-action {
+  --border-color: rgba(37, 99, 235, 0.22);
+  --background: rgba(255, 255, 255, 0.72);
+}
+
+.delete-action {
+  --box-shadow: 0 14px 26px rgba(220, 38, 38, 0.18);
+}
+
+/* Search panel card supports the Manage page lookup-first workflow. */
+.search-panel-card {
+  border-color: rgba(37, 99, 235, 0.16);
+}
+
+.search-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.search-panel-heading h2 {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: 1.08rem;
+  font-weight: 950;
+  letter-spacing: -0.035em;
+}
+
+.search-panel-heading p {
+  margin: 5px 0 0;
+  color: var(--text-soft);
+  font-size: 0.84rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.search-panel-heading > ion-icon {
+  font-size: 2rem;
+  color: var(--accent);
+  padding: 10px;
+  border-radius: 18px;
+  background: var(--accent-soft);
+  flex: 0 0 auto;
+}
+
+.search-panel-card .search-field {
+  margin-bottom: 12px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .refined-form-list ion-item.field-control:hover,
+  .search-panel-card ion-item.field-control:hover {
+    transform: translateY(-1px);
+    border-color: rgba(148, 163, 184, 0.9);
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.07);
+  }
+}
+
+@media (max-width: 640px) {
+  .form-section-card {
+    padding: 14px;
+    border-radius: 22px;
+  }
+
+  .form-section-title.with-action {
+    grid-template-columns: auto 1fr;
+  }
+
+  .form-section-title.with-action .suggest-pill {
+    grid-column: 1 / -1;
+    justify-self: start;
+    margin-top: 2px;
+  }
+
+  .field-leading-icon {
+    width: 34px;
+    height: 34px;
+    margin-inline-end: 10px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 420px) {
+  .refined-form-list ion-item.field-control,
+  .search-panel-card ion-item.field-control {
+    --padding-start: 11px;
+    --padding-end: 11px;
+    --min-height: 76px;
+    border-radius: 18px;
+  }
+
+  .field-label-text {
+    font-size: 0.82rem;
+  }
+
+  .field-hint {
+    font-size: 0.69rem;
+  }
+
+  .value-input {
+    font-size: 0.96rem;
+  }
+}
+
+.refined-form-list .validation-note {
+  margin: -6px 0 0 56px;
+  padding: 7px 10px;
+  border-radius: 12px;
+  background: rgba(220, 38, 38, 0.08);
+  font-size: 0.78rem;
+  line-height: 1.25;
+}
+
+.refined-form-list > .double-field + .validation-note {
+  margin-left: 0;
+}
+
+@media (max-width: 520px) {
+  .refined-form-list .validation-note {
+    margin-left: 0;
+  }
+}
+
+
+/* UI v4 mobile polish */
+ion-button {
+  text-transform: none;
+}
+
+ion-card {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Premium field component: the core reusable visual treatment for Ionic form items. */
+.premium-field {
+  position: relative;
+  overflow: visible;
+}
+
+.premium-field::part(native) {
+  overflow: visible;
+}
+
+.premium-field::after {
+  content: '';
+  position: absolute;
+  inset: auto 18px -1px 66px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.18), transparent);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.premium-field.item-has-focus::after {
+  opacity: 1;
+}
+
+.metric-field .numeric-value {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+}
+
+.metric-field ion-input {
+  text-align: left;
+}
+
+.value-input::part(native),
+.value-input::part(textarea),
+.value-input::part(placeholder) {
+  font-feature-settings: 'tnum';
+}
+
+ion-select.value-input::part(text) {
+  color: var(--text-strong);
+  font-weight: 900;
+}
+
+ion-select.value-input::part(placeholder) {
+  color: #94a3b8;
+  opacity: 1;
+  font-weight: 800;
+}
+
+.form-list ion-item ion-input,
+.form-list ion-item ion-textarea,
+.form-list ion-item ion-select,
+.search-panel-card ion-item ion-input {
+  margin-top: 6px;
+}
+
+.toggle-control ion-toggle::part(track) {
+  height: 28px;
+}
+
+.toggle-control ion-toggle::part(handle) {
+  width: 24px;
+  height: 24px;
+}
+
+.primary-action {
+  --box-shadow: 0 14px 28px rgba(37, 99, 235, 0.18);
+}
+
+.secondary-action {
+  --box-shadow: none;
+  color: var(--accent);
+}
+
+.item-card {
+  isolation: isolate;
+}
+
+.item-card::after {
+  content: '';
+  position: absolute;
+  inset: 5px 0 auto;
+  height: 70px;
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.035), transparent);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.meta-pill strong {
+  letter-spacing: -0.02em;
+}
+
+ion-segment-button::part(indicator-background) {
+  border-radius: 14px;
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.08);
+}
+
+.search-panel,
+.search-panel-card,
+.summary-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.search-panel::before,
+.search-panel-card::before,
+.summary-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 5px;
+  background: linear-gradient(90deg, #2563eb, #38bdf8, #14b8a6);
+  opacity: 0.88;
+}
+
+@media (max-width: 460px) {
+  .primary-action {
+    min-height: 52px;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+  }
+}
+
+
+/* UI v5 typography and unified status form polish */
+ion-title,
+ion-label,
+ion-input,
+ion-select,
+ion-textarea,
+ion-button,
+ion-card-title,
+ion-card-subtitle {
+  font-family: var(--ion-font-family, "Plus Jakarta Sans", "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+}
+
+.form-section-card.unified-section {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(37, 99, 235, 0.08), transparent 30%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.86));
+}
+
+.status-field {
+  --min-height: 82px;
+  border-color: rgba(37, 99, 235, 0.22) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.9)) !important;
+}
+
+.status-field .status-icon {
+  color: #0891b2;
+  background: rgba(14, 165, 233, 0.12);
+}
+
+.status-helper-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 13px;
+  border-radius: 18px;
+  border: 1px solid rgba(14, 165, 233, 0.18);
+  background:
+    radial-gradient(circle at 0% 0%, rgba(14, 165, 233, 0.11), transparent 30%),
+    rgba(255, 255, 255, 0.82);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.045);
+}
+
+.status-helper-card.compact {
+  padding: 11px 13px;
+}
+
+.status-helper-copy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.status-helper-copy > ion-icon {
+  width: 34px;
+  height: 34px;
+  padding: 8px;
+  border-radius: 14px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  flex: 0 0 auto;
+}
+
+.status-helper-copy span {
+  display: block;
+  color: var(--text-soft);
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.045em;
+}
+
+.status-helper-copy strong {
+  display: block;
+  margin-top: 3px;
+  color: var(--text-strong);
+  font-size: 0.92rem;
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.compact-suggest {
+  flex: 0 0 auto;
+}
+
+.field-label-text {
+  font-weight: 900;
+}
+
+.value-input,
+ion-select.value-input::part(text) {
+  font-weight: 800;
+}
+
+@media (max-width: 520px) {
+  .status-helper-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .compact-suggest {
+    width: 100%;
+  }
+}
+
+/* UI v6 refined typography system */
+:host {
+  --ion-font-family: "Plus Jakarta Sans", "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --heading-tracking: -0.026em;
+  --label-tracking: 0.018em;
+  --body-tracking: -0.006em;
+  font-family: var(--ion-font-family);
+  font-weight: 500;
+  letter-spacing: var(--body-tracking);
+}
+
+ion-content, ion-header, ion-toolbar, ion-card, ion-list, ion-item, ion-label, ion-input, ion-select, ion-textarea, ion-button, ion-title, ion-note, ion-chip, ion-segment-button {
+  font-family: var(--ion-font-family) !important;
+}
+
+.app-toolbar ion-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: var(--heading-tracking);
+}
+
+.toolbar-row h1, .section-heading h2, .search-panel-heading h2, .form-section-title h2, .summary-card h2, .info-card h2, .empty-state h3, .item-card ion-card-title {
+  font-weight: 800;
+  letter-spacing: var(--heading-tracking);
+}
+
+.toolbar-row p, .section-heading p, .search-panel-heading p, .form-section-title p, .summary-card p, .info-card p, .note-text, .empty-state p {
+  font-weight: 500;
+  letter-spacing: var(--body-tracking);
+}
+
+.item-card ion-card-title {
+  font-size: 1.12rem;
+  line-height: 1.22;
+}
+
+.item-card ion-card-subtitle {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.field-label-text, .meta-pill span, .status-helper-copy span {
+  font-weight: 700;
+  letter-spacing: var(--label-tracking);
+}
+
+.field-label-text {
+  color: #0f172a;
+  font-size: 0.84rem;
+}
+
+.field-hint {
+  color: #718096;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: -0.002em;
+}
+
+.value-input, ion-select.value-input::part(text), ion-select.value-input::part(placeholder), ion-input.value-input, ion-textarea.value-input {
+  font-family: var(--ion-font-family) !important;
+  font-size: 1.02rem;
+  font-weight: 650;
+  letter-spacing: -0.012em;
+}
+
+.value-input::part(native), .value-input::part(textarea), .value-input::part(placeholder), ion-select.value-input::part(text) {
+  font-family: var(--ion-font-family) !important;
+}
+
+.numeric-value, .meta-pill strong, .status-chip {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1, 'cv02' 1, 'cv03' 1;
+}
+
+.numeric-value {
+  font-size: 1.13rem;
+  font-weight: 750;
+  letter-spacing: -0.018em;
+}
+
+.meta-pill span {
+  color: #64748b;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+}
+
+.meta-pill strong {
+  color: #111827;
+  font-size: 0.98rem;
+  font-weight: 750;
+  letter-spacing: -0.012em;
+}
+
+.status-chip {
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.005em;
+}
+
+.primary-action, .suggest-pill, .mini-text-button, ion-segment-button, ion-tab-button {
+  font-weight: 750;
+  letter-spacing: -0.008em;
+}
+
+.validation-note {
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+.status-helper-copy strong {
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+
+.form-list ion-label {
+  font-weight: 600;
+}
+
+ion-searchbar {
+  --color: #111827;
+  --placeholder-color: #7c8798;
+  font-family: var(--ion-font-family) !important;
+  font-weight: 600;
+}
+
+@media (max-width: 420px) {
+  .item-card ion-card-title { font-size: 1.06rem; }
+  .value-input, ion-select.value-input::part(text), ion-input.value-input, ion-textarea.value-input { font-size: 0.98rem; }
+}
+
+
+/* UI v7 orderly typography scale */
+:host {
+  --type-toolbar-title: 1.02rem;
+  --type-page-title: clamp(1.32rem, 4.6vw, 1.68rem);
+  --type-section-title: 1.04rem;
+  --type-card-title: 1.03rem;
+  --type-form-title: 1rem;
+  --type-body: 0.88rem;
+  --type-caption: 0.78rem;
+  --type-label: 0.76rem;
+  --type-hint: 0.7rem;
+  --type-value: 0.98rem;
+  --type-value-strong: 1.06rem;
+  --type-chip: 0.72rem;
+  --line-title: 1.18;
+  --line-body: 1.52;
+  --line-label: 1.25;
+}
+
+.app-toolbar ion-title {
+  font-size: var(--type-toolbar-title);
+  font-weight: 780;
+  letter-spacing: -0.022em;
+  line-height: var(--line-title);
+}
+
+.toolbar-row h1 {
+  font-size: var(--type-page-title);
+  font-weight: 820;
+  letter-spacing: -0.034em;
+  line-height: 1.08;
+}
+
+.toolbar-row p,
+.section-heading p,
+.search-panel-heading p,
+.form-section-title p,
+.summary-card p,
+.info-card p,
+.empty-state p,
+.note-text,
+.loading-box span {
+  font-size: var(--type-body);
+  font-weight: 500;
+  line-height: var(--line-body);
+  letter-spacing: -0.004em;
+}
+
+.section-heading h2,
+.search-panel-heading h2,
+.empty-state h3 {
+  font-size: var(--type-section-title);
+  font-weight: 780;
+  line-height: var(--line-title);
+  letter-spacing: -0.024em;
+}
+
+.form-section-title h2,
+.summary-card h2,
+.info-card h2 {
+  font-size: var(--type-form-title);
+  font-weight: 780;
+  line-height: var(--line-title);
+  letter-spacing: -0.02em;
+}
+
+.item-card ion-card-title {
+  font-size: var(--type-card-title);
+  font-weight: 780;
+  line-height: 1.22;
+  letter-spacing: -0.022em;
+}
+
+.item-card ion-card-subtitle {
+  font-size: var(--type-caption);
+  font-weight: 680;
+  line-height: 1.18;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.field-label-text,
+.meta-pill span,
+.status-helper-copy span,
+.status-preview-left span {
+  font-size: var(--type-label);
+  font-weight: 720;
+  line-height: var(--line-label);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.field-label-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #172033;
+}
+
+.field-hint {
+  font-size: var(--type-hint);
+  font-weight: 500;
+  line-height: 1.34;
+  letter-spacing: 0;
+  color: #738196;
+}
+
+.value-input,
+ion-input.value-input,
+ion-textarea.value-input,
+ion-select.value-input::part(text),
+ion-select.value-input::part(placeholder) {
+  font-size: var(--type-value);
+  font-weight: 640;
+  line-height: 1.35;
+  letter-spacing: -0.008em;
+}
+
+.numeric-value {
+  font-size: var(--type-value-strong);
+  font-weight: 720;
+  letter-spacing: -0.012em;
+}
+
+.meta-pill strong,
+.status-helper-copy strong,
+.status-preview-left strong {
+  font-size: var(--type-value);
+  font-weight: 720;
+  line-height: 1.3;
+  letter-spacing: -0.008em;
+}
+
+.status-chip {
+  font-size: var(--type-chip);
+  font-weight: 720;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+
+.primary-action,
+.secondary-action,
+.delete-action,
+.suggest-pill,
+.mini-text-button,
+.manage-link,
+ion-segment-button,
+ion-tab-button {
+  font-size: 0.86rem;
+  font-weight: 720;
+  letter-spacing: -0.006em;
+}
+
+.validation-note {
+  font-size: 0.75rem;
+  font-weight: 580;
+  line-height: 1.28;
+}
+
+.refined-form-list ion-item.field-control,
+.search-panel-card ion-item.field-control {
+  --min-height: 76px;
+}
+
+.textarea-control {
+  --min-height: 122px;
+}
+
+.form-section-title {
+  margin-bottom: 13px;
+}
+
+.meta-pill {
+  padding: 10px 11px;
+}
+
+@media (max-width: 420px) {
+  :host {
+    --type-page-title: 1.24rem;
+    --type-section-title: 1rem;
+    --type-card-title: 1rem;
+    --type-body: 0.84rem;
+    --type-value: 0.95rem;
+    --type-value-strong: 1.02rem;
+  }
+}
+
+/* UI v8 form hierarchy refinement
+   Inspired by the reference project's clearer detail-field hierarchy:
+   labels are now larger, consistent, and easier to scan than values. */
+:host {
+  --type-form-label-large: 1.125rem;
+  --type-form-value-medium: 1.02rem;
+  --type-form-value-number: 1.06rem;
+  --type-form-hint-readable: 0.8rem;
+  --form-field-radius: 22px;
+}
+
+.inventory-form .field-label-text,
+.search-panel-card .field-label-text {
+  font-size: var(--type-form-label-large) !important;
+  font-weight: 820 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.012em !important;
+  text-transform: none !important;
+  color: #0f172a !important;
+}
+
+.inventory-form .field-hint,
+.search-panel-card .field-hint {
+  margin-top: 5px;
+  font-size: var(--type-form-hint-readable) !important;
+  font-weight: 520 !important;
+  line-height: 1.36 !important;
+  letter-spacing: -0.002em !important;
+  color: #66758a !important;
+}
+
+.inventory-form .value-input,
+.inventory-form ion-input.value-input,
+.inventory-form ion-textarea.value-input,
+.search-panel-card .value-input,
+.search-panel-card ion-input.value-input,
+ion-select.value-input::part(text),
+ion-select.value-input::part(placeholder) {
+  font-size: var(--type-form-value-medium) !important;
+  font-weight: 640 !important;
+  line-height: 1.35 !important;
+  letter-spacing: -0.006em !important;
+}
+
+.inventory-form .numeric-value,
+.search-panel-card .numeric-value {
+  font-size: var(--type-form-value-number) !important;
+  font-weight: 700 !important;
+}
+
+.inventory-form .refined-form-list ion-item.field-control,
+.search-panel-card ion-item.field-control {
+  --min-height: 94px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --inner-padding-end: 14px;
+  border-radius: var(--form-field-radius);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(248, 250, 252, 0.9)) !important;
+}
+
+.inventory-form .compact-number-field {
+  --min-height: 96px;
+}
+
+.inventory-form .toggle-control {
+  --min-height: 88px;
+}
+
+.inventory-form .textarea-control {
+  --min-height: 148px;
+}
+
+.inventory-form ion-item.field-control ion-label,
+.search-panel-card ion-item.field-control ion-label {
+  margin-top: 2px;
+  margin-bottom: 8px;
+}
+
+.inventory-form .field-leading-icon,
+.search-panel-card .field-leading-icon {
+  width: 42px;
+  height: 42px;
+  padding: 10px;
+  margin-inline-end: 14px;
+  border-radius: 17px;
+}
+
+.inventory-form .value-input::part(native),
+.inventory-form .value-input::part(textarea),
+.search-panel-card .value-input::part(native) {
+  padding-top: 8px;
+  padding-bottom: 6px;
+  font-size: var(--type-form-value-medium) !important;
+  font-weight: 640 !important;
+}
+
+.inventory-form ion-select.value-input::part(text),
+.inventory-form ion-select.value-input::part(placeholder) {
+  padding-top: 8px;
+  font-size: var(--type-form-value-medium) !important;
+  font-weight: 640 !important;
+}
+
+.inventory-form .required-mark {
+  font-size: 1em;
+  font-weight: 900;
+  color: #ef4444;
+}
+
+.inventory-form .form-section-title h2,
+.search-panel-heading h2 {
+  font-size: 1.12rem !important;
+  font-weight: 820 !important;
+}
+
+.inventory-form .form-section-title p,
+.search-panel-heading p {
+  font-size: 0.9rem !important;
+  line-height: 1.48 !important;
+}
+
+.inventory-form .status-helper-copy strong {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+}
+
+.inventory-form .status-helper-copy span {
+  font-size: 0.78rem !important;
+  font-weight: 720 !important;
+  text-transform: none !important;
+  letter-spacing: -0.004em !important;
+}
+
+.inventory-form .refined-form-list .validation-note {
+  margin-left: 64px;
+  font-size: 0.82rem;
+  font-weight: 640;
+}
+
+.inventory-form .primary-action,
+.inventory-form .secondary-action,
+.inventory-form .delete-action {
+  font-size: 0.96rem;
+  min-height: 54px;
+  font-weight: 760;
+}
+
+@media (max-width: 520px) {
+  :host {
+    --type-form-label-large: 1.06rem;
+    --type-form-value-medium: 0.98rem;
+    --type-form-value-number: 1.02rem;
+    --type-form-hint-readable: 0.78rem;
+  }
+
+  .inventory-form .refined-form-list ion-item.field-control,
+  .search-panel-card ion-item.field-control {
+    --min-height: 90px;
+    --padding-start: 14px;
+    --padding-end: 14px;
+    border-radius: 20px;
+  }
+
+  .inventory-form .field-leading-icon,
+  .search-panel-card .field-leading-icon {
+    width: 38px;
+    height: 38px;
+    padding: 9px;
+    margin-inline-end: 12px;
+  }
+
+  .inventory-form .refined-form-list .validation-note {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .inventory-form .field-label-text,
+  .search-panel-card .field-label-text {
+    font-size: 1.02rem !important;
+  }
+
+  .inventory-form .value-input,
+  .inventory-form ion-input.value-input,
+  .inventory-form ion-textarea.value-input,
+  .search-panel-card .value-input,
+  .search-panel-card ion-input.value-input,
+  ion-select.value-input::part(text),
+  ion-select.value-input::part(placeholder) {
+    font-size: 0.96rem !important;
+  }
+}
+
+/* UI v9 reference-style glass redesign
+   Closely follows the provided reference project's aurora background,
+   milky header, glass surfaces, and clear mobile form hierarchy. */
+:host {
+  --ion-font-family: "Plus Jakarta Sans", "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --glass-white: rgba(255, 255, 255, 0.25);
+  --glass-white-strong: rgba(255, 255, 255, 0.46);
+  --glass-white-soft: rgba(255, 255, 255, 0.18);
+  --glass-field: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.78);
+  --glass-border-soft: rgba(255, 255, 255, 0.58);
+  --glass-shadow:
+    0 8px 12px rgba(31, 41, 55, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  --glass-shadow-strong:
+    0 16px 34px rgba(31, 41, 55, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38);
+  --glass-card-radius: 12px;
+  --glass-inner-radius: 10px;
+  --glass-icon-radius: 9px;
+  --glass-border-width: 1px;
+  --text-strong: #111827;
+  --text-soft: #535353;
+  --text-muted: #6b7280;
+  --accent: #111827;
+  --type-form-label-large: 1.12rem;
+  --type-form-value-medium: 1rem;
+  --type-form-value-number: 1.04rem;
+  --type-form-hint-readable: 0.86rem;
+}
+
+ion-content.glass-page,
+ion-content {
+  --background: #ffffff !important;
+  position: relative;
+  font-family: var(--ion-font-family) !important;
+}
+
+ion-content.glass-page::part(background),
+ion-content::part(background) {
+  background: #ffffff !important;
+}
+
+.aurora-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background-color: #ffffff;
+  background-image:
+    radial-gradient(circle,
+      rgba(174, 172, 246, 0.70) 0%,
+      rgba(187, 186, 245, 0.50) 36%,
+      rgba(151, 149, 240, 0) 66%),
+    radial-gradient(circle,
+      rgba(251, 200, 212, 0.70) 0%,
+      rgba(251, 200, 212, 0.50) 36%,
+      rgba(251, 200, 212, 0) 66%),
+    radial-gradient(circle,
+      rgba(151, 217, 225, 0.88) 0%,
+      rgba(151, 217, 225, 0.66) 36%,
+      rgba(151, 217, 225, 0) 66%),
+    radial-gradient(circle,
+      rgba(153, 201, 156, 0.88) 0%,
+      rgba(153, 201, 156, 0.66) 36%,
+      rgba(153, 201, 156, 0) 66%),
+    linear-gradient(135deg,
+      #9795f0 0%,
+      #fbc8d4 32%,
+      #97d9e1 66%,
+      #99c99c 100%);
+  background-size:
+    48vmax 48vmax,
+    48vmax 48vmax,
+    52vmax 52vmax,
+    52vmax 52vmax,
+    100% 100%;
+  background-position:
+    -22% -14%,
+    118% -10%,
+    -16% 116%,
+    116% 114%,
+    center;
+  background-repeat: no-repeat;
+  animation: auroraBackgroundMovementV9 24s ease-in-out infinite;
+  will-change: background-position;
+}
+
+.aurora-background::after {
+  content: "";
+  position: absolute;
+  inset: -2%;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.58);
+}
+
+@keyframes auroraBackgroundMovementV9 {
+  0%, 100% {
+    background-position: -22% -14%, 118% -10%, -16% 116%, 116% 114%, center;
+  }
+  25% {
+    background-position: 122% 58%, -16% 110%, 48% 18%, 90% 72%, center;
+  }
+  50% {
+    background-position: -20% 96%, 112% 104%, 70% 28%, 8% 18%, center;
+  }
+  75% {
+    background-position: 52% 10%, 50% 58%, 8% 102%, 112% 28%, center;
+  }
+}
+
+/* Header: same milky centered title style as the reference project. */
+ion-header.app-top-header {
+  box-shadow: none;
+  background: #fffaf2 !important;
+}
+
+ion-header.app-top-header::after {
+  display: none;
+}
+
+ion-header.app-top-header ion-toolbar.app-top-toolbar {
+  --min-height: 68px;
+  --background: #fffaf2 !important;
+  --color: #111827;
+  --border-width: 0;
+  --padding-start: 14px;
+  --padding-end: 14px;
+  position: relative;
+  background: #fffaf2 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 6px 18px rgba(31, 41, 55, 0.08),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.75);
+}
+
+ion-header.app-top-header ion-toolbar.app-top-toolbar::part(background) {
+  background: #fffaf2 !important;
+}
+
+ion-header.app-top-header ion-title {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 120px);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1b1b1b;
+  font-size: 24px;
+  font-weight: 650;
+  letter-spacing: 0.005em;
+  text-align: center;
+}
+
+ion-header.app-top-header ion-buttons[slot="end"] {
+  position: relative;
+  z-index: 2;
+  margin-right: 2px;
+}
+
+:host ::ng-deep app-help-widget .help-button {
+  width: 42px;
+  height: 42px;
+  margin: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --border-radius: 999px;
+  --background: rgba(255, 255, 255, 0.55);
+  --background-hover: rgba(255, 255, 255, 0.68);
+  --background-activated: rgba(255, 255, 255, 0.78);
+  --box-shadow: none;
+  --color: #111827;
+}
+
+:host ::ng-deep app-help-widget .help-button::part(native) {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+:host ::ng-deep app-help-widget ion-icon {
+  font-size: 24px;
+  color: #111827;
+}
+
+.page-shell.page-container,
+.page-container {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  padding: 14px;
+  padding-bottom: calc(104px + var(--ion-safe-area-bottom, 0px));
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+/* Glass cards and page sections. */
+.surface-card,
+.form-card,
+.empty-state,
+.item-card,
+.info-card,
+.summary-card {
+  --background: var(--glass-white-strong) !important;
+  background: var(--glass-white-strong) !important;
+  border: var(--glass-border-width) solid var(--glass-border) !important;
+  border-radius: var(--glass-card-radius) !important;
+  box-shadow: var(--glass-shadow) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.surface-card,
+.form-card {
+  margin: 0 0 16px;
+  overflow: hidden;
+}
+
+.surface-card ion-card-content,
+.form-card ion-card-content {
+  padding: 14px;
+}
+
+.form-section-card {
+  border-radius: var(--glass-card-radius) !important;
+  border: var(--glass-border-width) solid var(--glass-border) !important;
+  background: rgba(255, 255, 255, 0.30) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.30);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 14px !important;
+}
+
+.form-section-card.unified-section,
+.form-section-card.product-flow-section {
+  background: rgba(255, 255, 255, 0.30) !important;
+}
+
+.form-section-title,
+.search-panel-heading,
+.section-heading,
+.toolbar-row {
+  text-align: center;
+}
+
+.form-section-title {
+  display: grid !important;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px !important;
+}
+
+.section-badge {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: var(--glass-icon-radius) !important;
+  border: var(--glass-border-width) solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.54) !important;
+  color: #111827 !important;
+  box-shadow: var(--glass-shadow);
+  font-size: 15px !important;
+  font-weight: 800 !important;
+}
+
+.form-section-title h2,
+.search-panel-heading h2,
+.section-heading h2,
+.toolbar-row h1 {
+  margin: 0;
+  color: #1b1b1b !important;
+  font-size: 24px !important;
+  font-weight: 760 !important;
+  line-height: 1.15 !important;
+  letter-spacing: 0.002em !important;
+}
+
+.form-section-title p,
+.search-panel-heading p,
+.section-heading p,
+.toolbar-row p {
+  margin: 7px 0 0 0 !important;
+  color: #535353 !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 1.35 !important;
+  letter-spacing: 0 !important;
+}
+
+/* Form fields: large consistent labels, slightly smaller values, glass inputs. */
+.refined-form-list {
+  display: grid;
+  gap: 12px !important;
+}
+
+.inventory-form .refined-form-list ion-item.field-control,
+.search-panel-card ion-item.field-control,
+.form-list ion-item.field-control {
+  --background: var(--glass-field) !important;
+  --border-color: transparent;
+  --inner-border-width: 0;
+  --padding-start: 14px;
+  --padding-end: 14px;
+  --inner-padding-end: 12px;
+  --min-height: 92px;
+  margin: 0;
+  border-radius: var(--glass-inner-radius) !important;
+  border: var(--glass-border-width) solid rgba(255, 255, 255, 0.88) !important;
+  background: var(--glass-field) !important;
+  box-shadow:
+    0 8px 12px rgba(31, 41, 55, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.inventory-form .refined-form-list ion-item.field-control.item-has-focus,
+.search-panel-card ion-item.field-control.item-has-focus {
+  background: rgba(255, 255, 255, 0.84) !important;
+  border-color: rgba(255, 255, 255, 0.98) !important;
+  box-shadow:
+    0 12px 20px rgba(31, 41, 55, 0.10),
+    0 0 0 3px rgba(255, 255, 255, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.52) !important;
+}
+
+.inventory-form .compact-number-field {
+  --min-height: 96px;
+}
+
+.inventory-form .textarea-control {
+  --min-height: 148px;
+}
+
+.inventory-form .toggle-control {
+  --min-height: 88px;
+}
+
+.inventory-form .field-leading-icon,
+.search-panel-card .field-leading-icon {
+  width: 42px !important;
+  height: 42px !important;
+  margin-inline-end: 12px !important;
+  padding: 9px !important;
+  border-radius: var(--glass-icon-radius) !important;
+  color: #111827 !important;
+  background: rgba(255, 255, 255, 0.46) !important;
+  border: var(--glass-border-width) solid rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.inventory-form .field-label-text,
+.search-panel-card .field-label-text {
+  display: block !important;
+  color: #111827 !important;
+  font-size: var(--type-form-label-large) !important;
+  font-weight: 760 !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.inventory-form .field-hint,
+.search-panel-card .field-hint {
+  display: block !important;
+  margin-top: 5px !important;
+  color: #535353 !important;
+  font-size: var(--type-form-hint-readable) !important;
+  font-weight: 460 !important;
+  line-height: 1.35 !important;
+  letter-spacing: 0 !important;
+}
+
+.inventory-form .value-input,
+.inventory-form ion-input.value-input,
+.inventory-form ion-textarea.value-input,
+.search-panel-card .value-input,
+.search-panel-card ion-input.value-input,
+.inventory-form ion-select.value-input::part(text),
+.inventory-form ion-select.value-input::part(placeholder),
+.search-panel-card ion-select.value-input::part(text),
+.search-panel-card ion-select.value-input::part(placeholder) {
+  font-size: var(--type-form-value-medium) !important;
+  font-weight: 540 !important;
+  line-height: 1.35 !important;
+  letter-spacing: 0 !important;
+  color: #111827 !important;
+}
+
+.inventory-form .value-input::part(native),
+.inventory-form .value-input::part(textarea),
+.search-panel-card .value-input::part(native) {
+  padding-top: 8px !important;
+  padding-bottom: 6px !important;
+  font-size: var(--type-form-value-medium) !important;
+  font-weight: 540 !important;
+}
+
+.inventory-form ion-select.value-input::part(text),
+.inventory-form ion-select.value-input::part(placeholder) {
+  padding-top: 8px !important;
+}
+
+.inventory-form .numeric-value,
+.search-panel-card .numeric-value {
+  font-size: var(--type-form-value-number) !important;
+  font-weight: 620 !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.inventory-form .required-mark {
+  color: #dc2626 !important;
+  font-weight: 800 !important;
+}
+
+.status-field,
+.note-field {
+  background: var(--glass-field) !important;
+}
+
+.feature-toggle-field ion-toggle {
+  --track-background: rgba(255, 255, 255, 0.52);
+  --track-background-checked: rgba(153, 201, 156, 0.70);
+  --handle-background: #ffffff;
+  --handle-background-checked: #111827;
+}
+
+.validation-note {
+  margin: -5px 0 0 56px !important;
+  padding: 8px 11px !important;
+  border-radius: var(--glass-inner-radius) !important;
+  border: 1px solid rgba(255, 255, 255, 0.70);
+  background: rgba(255, 255, 255, 0.62) !important;
+  color: #b91c1c !important;
+  font-size: 0.86rem !important;
+  font-weight: 600 !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Reference-like buttons. */
+.primary-action,
+.secondary-action,
+.delete-action,
+.mini-text-button,
+.manage-link,
+.clear-search-button {
+  min-height: 52px;
+  --border-radius: var(--glass-inner-radius) !important;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --box-shadow: var(--glass-shadow) !important;
+  font-size: 16px !important;
+  font-weight: 740 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.primary-action::part(native),
+.secondary-action::part(native),
+.delete-action::part(native),
+.mini-text-button::part(native) {
+  border-radius: var(--glass-inner-radius) !important;
+  border: var(--glass-border-width) solid rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.secondary-action {
+  --background: rgba(255, 255, 255, 0.58) !important;
+  --background-hover: rgba(255, 255, 255, 0.68) !important;
+  --background-activated: rgba(255, 255, 255, 0.78) !important;
+  --color: #111827 !important;
+  --border-color: rgba(255, 255, 255, 0.82) !important;
+}
+
+.elevated-actions,
+.destructive-row {
+  position: sticky;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  z-index: 5;
+  padding: 10px !important;
+  border: var(--glass-border-width) solid var(--glass-border) !important;
+  border-radius: 16px !important;
+  background: rgba(255, 255, 255, 0.40) !important;
+  box-shadow: var(--glass-shadow-strong) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* Inventory item cards use the same glass information-box language as the reference. */
+.item-card {
+  border-radius: var(--glass-card-radius) !important;
+  cursor: default;
+}
+
+.item-card::before {
+  height: 0 !important;
+  display: none !important;
+}
+
+.item-card ion-card-header {
+  padding: 14px 14px 8px !important;
+  border-radius: var(--glass-card-radius) var(--glass-card-radius) 0 0;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.item-card ion-card-title {
+  color: #111827 !important;
+  font-size: 20px !important;
+  font-weight: 780 !important;
+  line-height: 1.18 !important;
+  letter-spacing: 0 !important;
+}
+
+.item-card ion-card-subtitle {
+  margin-top: 6px !important;
+  color: #535353 !important;
+  font-size: 14px !important;
+  font-weight: 560 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.item-meta {
+  gap: 10px !important;
+}
+
+.meta-pill,
+.note-box {
+  border-radius: var(--glass-inner-radius) !important;
+  border: var(--glass-border-width) solid rgba(255, 255, 255, 0.76) !important;
+  background: rgba(255, 255, 255, 0.54) !important;
+  box-shadow:
+    0 8px 12px rgba(31, 41, 55, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38);
+}
+
+.meta-pill span,
+.note-label {
+  color: #535353 !important;
+  font-size: 14px !important;
+  font-weight: 560 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
+
+.meta-pill strong,
+.note-text {
+  color: #111827 !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+}
+
+.status-chip {
+  border-radius: 999px !important;
+  border: var(--glass-border-width) solid rgba(255, 255, 255, 0.70);
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.status-in {
+  color: #166534 !important;
+  background: rgba(153, 201, 156, 0.46) !important;
+}
+
+.status-low {
+  color: #92400e !important;
+  background: rgba(255, 236, 179, 0.56) !important;
+}
+
+.status-out {
+  color: #991b1b !important;
+  background: rgba(255, 210, 210, 0.60) !important;
+}
+
+.featured-chip,
+.card-feature-icon {
+  color: #111827 !important;
+  background: rgba(215, 227, 255, 0.58) !important;
+}
+
+.search-panel-card .search-field {
+  margin-bottom: 12px !important;
+}
+
+.empty-state {
+  padding: 24px 18px !important;
+  color: #111827 !important;
+  text-align: center;
+}
+
+.empty-state ion-icon {
+  color: #111827 !important;
+  opacity: 0.72;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .inventory-form .refined-form-list ion-item.field-control:hover,
+  .search-panel-card ion-item.field-control:hover,
+  .item-card:hover,
+  .surface-card:hover,
+  .form-card:hover {
+    transform: translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.94) !important;
+    box-shadow: var(--glass-shadow-strong) !important;
+  }
+}
+
+@media (max-width: 520px) {
+  :host {
+    --type-form-label-large: 1.08rem;
+    --type-form-value-medium: 0.98rem;
+    --type-form-value-number: 1.02rem;
+    --type-form-hint-readable: 0.82rem;
+  }
+
+  .page-shell.page-container,
+  .page-container {
+    padding: 14px;
+    padding-bottom: calc(104px + var(--ion-safe-area-bottom, 0px));
+  }
+
+  .form-section-title {
+    align-items: start;
+  }
+
+  .form-section-title h2,
+  .search-panel-heading h2,
+  .section-heading h2,
+  .toolbar-row h1 {
+    font-size: 22px !important;
+  }
+
+  .form-section-title p,
+  .search-panel-heading p,
+  .section-heading p,
+  .toolbar-row p {
+    font-size: 15px !important;
+  }
+
+  .validation-note {
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-width: 380px) {
+  :host {
+    --type-form-label-large: 1.02rem;
+    --type-form-value-medium: 0.94rem;
+    --type-form-hint-readable: 0.78rem;
+  }
+
+  ion-header.app-top-header ion-title {
+    font-size: 22px;
+  }
+
+  .inventory-form .field-leading-icon,
+  .search-panel-card .field-leading-icon {
+    width: 38px !important;
+    height: 38px !important;
+    margin-inline-end: 10px !important;
+  }
+}
+
+
+/* UI v10: original clean mobile-console direction.
+   Removes the copied aurora/gradient background and replaces the header, cards,
+   actions, and form fields with a structured solid-surface design. */
+:host {
+  --page-bg: #f6f8fb;
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
+  --surface-soft: #f1f5f9;
+  --line: #dbe4ef;
+  --line-strong: #cbd5e1;
+  --text-strong: #0f172a;
+  --text-soft: #475569;
+  --text-muted: #64748b;
+  --accent: #2563eb;
+  --accent-dark: #1d4ed8;
+  --accent-soft: #eff6ff;
+  --accent-line: #bfdbfe;
+  --success-soft: #ecfdf3;
+  --warning-soft: #fff7ed;
+  --danger-soft: #fef2f2;
+  --purple-soft: #f5f3ff;
+  --glass-white: #ffffff;
+  --glass-white-strong: #ffffff;
+  --glass-white-soft: #f8fafc;
+  --glass-field: #ffffff;
+  --glass-border: var(--line);
+  --glass-border-soft: #e2e8f0;
+  --glass-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+  --glass-shadow-strong: 0 18px 36px rgba(15, 23, 42, 0.10);
+  --glass-card-radius: 22px;
+  --glass-inner-radius: 16px;
+  --glass-icon-radius: 14px;
+  --glass-border-width: 1px;
+}
+
+ion-content.glass-page,
+ion-content,
+ion-content.glass-page::part(background),
+ion-content::part(background) {
+  --background: var(--page-bg) !important;
+  background: var(--page-bg) !important;
+  background-image: none !important;
+}
+
+.aurora-background {
+  display: none !important;
+}
+
+ion-header.app-top-header {
+  background: var(--surface) !important;
+  box-shadow: 0 2px 14px rgba(15, 23, 42, 0.08) !important;
+  border-bottom: 1px solid var(--line) !important;
+}
+
+ion-header.app-top-header::after {
+  display: none !important;
+}
+
+ion-header.app-top-header ion-toolbar.app-top-toolbar {
+  --min-height: 66px;
+  --background: var(--surface) !important;
+  --color: var(--text-strong);
+  --border-width: 0 !important;
+  --padding-start: 18px;
+  --padding-end: 14px;
+  position: relative;
+  background: var(--surface) !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+ion-header.app-top-header ion-toolbar.app-top-toolbar::part(background) {
+  background: var(--surface) !important;
+  background-image: none !important;
+}
+
+ion-header.app-top-header ion-toolbar.app-top-toolbar::before {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 19px;
+  bottom: 19px;
+  width: 4px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+ion-header.app-top-header ion-title {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: auto !important;
+  max-width: none !important;
+  padding: 0 0 0 16px !important;
+  margin: 0 !important;
+  display: block !important;
+  color: var(--text-strong) !important;
+  font-size: 1.25rem !important;
+  font-weight: 850 !important;
+  letter-spacing: -0.025em !important;
+  text-align: left !important;
+}
+
+ion-header.app-top-header ion-buttons[slot="end"] {
+  position: relative;
+  z-index: 2;
+  margin-right: 0;
+}
+
+:host ::ng-deep app-help-widget .help-button {
+  width: 40px;
+  height: 40px;
+  --border-radius: 14px;
+  --background: var(--accent-soft);
+  --background-hover: #dbeafe;
+  --background-activated: #bfdbfe;
+  --box-shadow: none;
+  --color: var(--accent-dark);
+}
+
+:host ::ng-deep app-help-widget .help-button::part(native) {
+  border-radius: 14px;
+  border: 1px solid var(--accent-line);
+  background: var(--accent-soft);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+:host ::ng-deep app-help-widget ion-icon {
+  font-size: 21px;
+  color: var(--accent-dark);
+}
+
+.page-shell.page-container,
+.page-container {
+  padding: 18px 16px;
+  padding-bottom: calc(108px + var(--ion-safe-area-bottom, 0px));
+}
+
+.surface-card,
+.form-card,
+.empty-state,
+.item-card,
+.info-card,
+.summary-card {
+  --background: var(--surface) !important;
+  background: var(--surface) !important;
+  background-image: none !important;
+  border: 1px solid var(--line) !important;
+  border-radius: var(--glass-card-radius) !important;
+  box-shadow: var(--glass-shadow) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.surface-card ion-card-content,
+.form-card ion-card-content {
+  padding: 18px !important;
+}
+
+.form-section-card,
+.form-section-card.unified-section,
+.form-section-card.product-flow-section {
+  background: var(--surface-muted) !important;
+  background-image: none !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 20px !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 16px !important;
+}
+
+.form-section-title,
+.search-panel-heading,
+.section-heading,
+.toolbar-row {
+  text-align: left !important;
+}
+
+.form-section-title {
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.section-badge {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 14px !important;
+  border: 1px solid var(--accent-line) !important;
+  background: var(--accent-soft) !important;
+  color: var(--accent-dark) !important;
+  box-shadow: none !important;
+  font-size: 0.92rem !important;
+  font-weight: 850 !important;
+}
+
+.form-section-title h2,
+.search-panel-heading h2,
+.section-heading h2,
+.toolbar-row h1 {
+  color: var(--text-strong) !important;
+  font-size: 1.34rem !important;
+  font-weight: 850 !important;
+  line-height: 1.16 !important;
+  letter-spacing: -0.026em !important;
+}
+
+.form-section-title p,
+.search-panel-heading p,
+.section-heading p,
+.toolbar-row p {
+  color: var(--text-soft) !important;
+  font-size: 0.94rem !important;
+  font-weight: 500 !important;
+  line-height: 1.45 !important;
+}
+
+.inventory-form .refined-form-list ion-item.field-control,
+.search-panel-card ion-item.field-control,
+.form-list ion-item.field-control {
+  --background: var(--surface) !important;
+  --border-color: transparent;
+  --inner-border-width: 0;
+  --padding-start: 14px;
+  --padding-end: 14px;
+  --inner-padding-end: 12px;
+  --min-height: 92px;
+  border-radius: var(--glass-inner-radius) !important;
+  border: 1px solid var(--line) !important;
+  background: var(--surface) !important;
+  background-image: none !important;
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.03) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.inventory-form .refined-form-list ion-item.field-control.item-has-focus,
+.search-panel-card ion-item.field-control.item-has-focus {
+  background: #ffffff !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.10) !important;
+}
+
+.inventory-form .field-leading-icon,
+.search-panel-card .field-leading-icon {
+  color: var(--accent-dark) !important;
+  background: var(--accent-soft) !important;
+  border: 1px solid var(--accent-line) !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+}
+
+.inventory-form .field-label-text,
+.search-panel-card .field-label-text {
+  color: var(--text-strong) !important;
+  font-size: 1.12rem !important;
+  font-weight: 820 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.inventory-form .field-hint,
+.search-panel-card .field-hint {
+  color: var(--text-muted) !important;
+  font-size: 0.86rem !important;
+  font-weight: 500 !important;
+}
+
+.inventory-form .value-input,
+.inventory-form ion-input.value-input,
+.inventory-form ion-textarea.value-input,
+.search-panel-card .value-input,
+.search-panel-card ion-input.value-input,
+.inventory-form ion-select.value-input::part(text),
+.inventory-form ion-select.value-input::part(placeholder),
+.search-panel-card ion-select.value-input::part(text),
+.search-panel-card ion-select.value-input::part(placeholder) {
+  color: var(--text-strong) !important;
+  font-size: 1rem !important;
+  font-weight: 560 !important;
+}
+
+.status-field,
+.note-field {
+  background: var(--surface) !important;
+  background-image: none !important;
+}
+
+.feature-toggle-field ion-toggle {
+  --track-background: #e2e8f0;
+  --track-background-checked: #bfdbfe;
+  --handle-background: #ffffff;
+  --handle-background-checked: var(--accent);
+}
+
+.validation-note {
+  background: #fff7ed !important;
+  border: 1px solid #fed7aa !important;
+  color: #9a3412 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.primary-action {
+  --background: var(--accent) !important;
+  --background-hover: var(--accent-dark) !important;
+  --background-activated: var(--accent-dark) !important;
+  --color: #ffffff !important;
+}
+
+.secondary-action,
+.mini-text-button,
+.clear-search-button {
+  --background: var(--surface) !important;
+  --background-hover: var(--surface-soft) !important;
+  --background-activated: #e2e8f0 !important;
+  --color: var(--accent-dark) !important;
+  --border-color: var(--line) !important;
+}
+
+.primary-action,
+.secondary-action,
+.delete-action,
+.mini-text-button,
+.manage-link,
+.clear-search-button {
+  --border-radius: 16px !important;
+  --box-shadow: none !important;
+  text-transform: none !important;
+}
+
+.primary-action::part(native),
+.secondary-action::part(native),
+.delete-action::part(native),
+.mini-text-button::part(native) {
+  border-radius: 16px !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.elevated-actions,
+.destructive-row {
+  border: 1px solid var(--line) !important;
+  border-radius: 20px !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  background-image: none !important;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.item-card {
+  border-radius: 22px !important;
+  overflow: hidden;
+}
+
+.item-card::before,
+.info-card::before,
+.loaded-card::before {
+  display: none !important;
+  background: none !important;
+}
+
+.item-card ion-card-header {
+  background: var(--surface) !important;
+  border-bottom: 1px solid var(--line) !important;
+  padding: 16px 16px 10px !important;
+}
+
+.item-card ion-card-title {
+  color: var(--text-strong) !important;
+  font-size: 1.12rem !important;
+  font-weight: 850 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.item-card ion-card-subtitle {
+  color: var(--text-muted) !important;
+  font-size: 0.86rem !important;
+  font-weight: 650 !important;
+}
+
+.meta-pill,
+.note-box {
+  background: var(--surface-muted) !important;
+  background-image: none !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 16px !important;
+  box-shadow: none !important;
+}
+
+.meta-pill span,
+.note-label {
+  color: var(--text-muted) !important;
+  font-size: 0.84rem !important;
+  font-weight: 700 !important;
+}
+
+.meta-pill strong,
+.note-text {
+  color: var(--text-strong) !important;
+  font-size: 0.98rem !important;
+  font-weight: 760 !important;
+}
+
+.status-chip {
+  border: 1px solid transparent !important;
+  box-shadow: none !important;
+}
+
+.status-in {
+  color: #166534 !important;
+  background: var(--success-soft) !important;
+  border-color: #bbf7d0 !important;
+}
+
+.status-low {
+  color: #92400e !important;
+  background: var(--warning-soft) !important;
+  border-color: #fed7aa !important;
+}
+
+.status-out {
+  color: #991b1b !important;
+  background: var(--danger-soft) !important;
+  border-color: #fecaca !important;
+}
+
+.featured-chip,
+.card-feature-icon {
+  color: #6d28d9 !important;
+  background: var(--purple-soft) !important;
+  border-color: #ddd6fe !important;
+}
+
+ion-searchbar {
+  --background: #ffffff !important;
+  --box-shadow: none !important;
+  --border-radius: 16px !important;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+ion-segment {
+  background: var(--surface-muted) !important;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 4px;
+}
+
+ion-segment-button {
+  --indicator-color: var(--surface) !important;
+  --color: var(--text-muted) !important;
+  --color-checked: var(--accent-dark) !important;
+  --border-radius: 14px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .inventory-form .refined-form-list ion-item.field-control:hover,
+  .search-panel-card ion-item.field-control:hover,
+  .item-card:hover,
+  .surface-card:hover,
+  .form-card:hover {
+    transform: translateY(-1px);
+    border-color: var(--line-strong) !important;
+    box-shadow: var(--glass-shadow-strong) !important;
+  }
+}
+
+@media (max-width: 520px) {
+  ion-header.app-top-header ion-title {
+    font-size: 1.18rem !important;
+  }
+
+  .form-section-title h2,
+  .search-panel-heading h2,
+  .section-heading h2,
+  .toolbar-row h1 {
+    font-size: 1.22rem !important;
+  }
+
+  .form-section-title p,
+  .search-panel-heading p,
+  .section-heading p,
+  .toolbar-row p {
+    font-size: 0.9rem !important;
+  }
+}
+
+/* UI v11 layout fixes: prevent the bottom tab bar from covering content and keep tab labels readable. */
+ion-content.glass-page,
+ion-content {
+  --padding-bottom: calc(128px + var(--ion-safe-area-bottom, 0px)) !important;
+}
+
+ion-content.glass-page::part(scroll),
+ion-content::part(scroll) {
+  padding-bottom: calc(128px + var(--ion-safe-area-bottom, 0px)) !important;
+  scroll-padding-bottom: calc(128px + var(--ion-safe-area-bottom, 0px)) !important;
+}
+
+.page-shell.page-container,
+.page-container {
+  padding-bottom: calc(144px + var(--ion-safe-area-bottom, 0px)) !important;
+}
+
+/* Sticky form action bars now sit above the real tab bar instead of underneath it. */
+.elevated-actions,
+.destructive-row {
+  bottom: calc(96px + var(--ion-safe-area-bottom, 0px)) !important;
+  z-index: 20 !important;
+}
+
+/* Add a little more breathing room under final cards/lists on every page. */
+.inventory-page > *:last-child,
+.add-page > *:last-child,
+.manage-page > *:last-child,
+.privacy-page > *:last-child {
+  margin-bottom: 24px !important;
+}
+
+@media (max-width: 520px) {
+  ion-content.glass-page,
+  ion-content {
+    --padding-bottom: calc(150px + var(--ion-safe-area-bottom, 0px)) !important;
+  }
+
+  ion-content.glass-page::part(scroll),
+  ion-content::part(scroll) {
+    padding-bottom: calc(150px + var(--ion-safe-area-bottom, 0px)) !important;
+    scroll-padding-bottom: calc(150px + var(--ion-safe-area-bottom, 0px)) !important;
+  }
+
+  .page-shell.page-container,
+  .page-container {
+    padding-bottom: calc(168px + var(--ion-safe-area-bottom, 0px)) !important;
+  }
+}
+
+/* UI v12 readable form hierarchy
+   Removes helper-description dependency and makes important labels/content more prominent. */
+:host {
+  --type-toolbar-title: 1.12rem;
+  --type-section-title: 1.2rem;
+  --type-card-title: 1.16rem;
+  --type-form-title: 1.22rem;
+  --type-form-label-large: 1.22rem;
+  --type-form-value-medium: 1.04rem;
+  --type-form-value-number: 1.12rem;
+}
+
+.app-top-toolbar ion-title,
+.app-toolbar ion-title {
+  font-size: var(--type-toolbar-title) !important;
+  font-weight: 850 !important;
+  letter-spacing: -0.025em !important;
+}
+
+.section-heading h2,
+.search-panel-heading h2,
+.empty-state h3 {
+  font-size: var(--type-section-title) !important;
+  font-weight: 830 !important;
+}
+
+.item-card ion-card-title {
+  font-size: var(--type-card-title) !important;
+  font-weight: 830 !important;
+}
+
+.inventory-form .form-section-title {
+  margin-bottom: 18px !important;
+}
+
+.inventory-form .form-section-title h2 {
+  font-size: var(--type-form-title) !important;
+  font-weight: 860 !important;
+  line-height: 1.16 !important;
+}
+
+.inventory-form .form-section-title p,
+.inventory-form .field-hint,
+.search-panel-card .field-hint {
+  display: none !important;
+}
+
+.inventory-form .field-label-text,
+.search-panel-card .field-label-text {
+  font-size: var(--type-form-label-large) !important;
+  font-weight: 860 !important;
+  line-height: 1.18 !important;
+  letter-spacing: -0.015em !important;
+  color: #0b1220 !important;
+}
+
+.inventory-form .value-input,
+.inventory-form ion-input.value-input,
+.inventory-form ion-textarea.value-input,
+.search-panel-card .value-input,
+.search-panel-card ion-input.value-input,
+.inventory-form ion-select.value-input::part(text),
+.inventory-form ion-select.value-input::part(placeholder),
+.search-panel-card ion-select.value-input::part(text),
+.search-panel-card ion-select.value-input::part(placeholder) {
+  font-size: var(--type-form-value-medium) !important;
+  font-weight: 660 !important;
+  line-height: 1.38 !important;
+}
+
+.inventory-form .numeric-value,
+.search-panel-card .numeric-value {
+  font-size: var(--type-form-value-number) !important;
+  font-weight: 740 !important;
+}
+
+.inventory-form ion-item.field-control ion-label,
+.search-panel-card ion-item.field-control ion-label {
+  margin-top: 0 !important;
+  margin-bottom: 6px !important;
+}
+
+.inventory-form .refined-form-list ion-item.field-control,
+.search-panel-card ion-item.field-control {
+  --min-height: 86px !important;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+}
+
+.inventory-form .compact-number-field {
+  --min-height: 88px !important;
+}
+
+.inventory-form .toggle-control {
+  --min-height: 78px !important;
+}
+
+.inventory-form .textarea-control {
+  --min-height: 132px !important;
+}
+
+.inventory-form .field-leading-icon,
+.search-panel-card .field-leading-icon {
+  width: 44px !important;
+  height: 44px !important;
+  padding: 10px !important;
+  border-radius: 16px !important;
+}
+
+.meta-pill span {
+  font-size: 0.78rem !important;
+  font-weight: 760 !important;
+}
+
+.meta-pill strong {
+  font-size: 1.04rem !important;
+  font-weight: 760 !important;
+}
+
+.status-chip {
+  font-size: 0.82rem !important;
+  font-weight: 760 !important;
+}
+
+.primary-action,
+.secondary-action,
+.delete-action,
+.mini-text-button,
+.manage-link,
+ion-segment-button,
+ion-tab-button {
+  font-size: 0.96rem !important;
+  font-weight: 760 !important;
+}
+
+@media (max-width: 520px) {
+  :host {
+    --type-section-title: 1.14rem;
+    --type-card-title: 1.1rem;
+    --type-form-title: 1.16rem;
+    --type-form-label-large: 1.14rem;
+    --type-form-value-medium: 1rem;
+    --type-form-value-number: 1.08rem;
+  }
+
+  .inventory-form .refined-form-list ion-item.field-control,
+  .search-panel-card ion-item.field-control {
+    --min-height: 82px !important;
+  }
+
+  .inventory-form .field-leading-icon,
+  .search-panel-card .field-leading-icon {
+    width: 40px !important;
+    height: 40px !important;
+    margin-inline-end: 12px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  :host {
+    --type-form-label-large: 1.1rem;
+    --type-form-value-medium: 0.98rem;
+    --type-form-value-number: 1.04rem;
+  }
+}
+
+.not-found-state {
+  border: 1px solid rgba(220, 38, 38, 0.18);
+  background: #fff7f7;
+}
+
+.not-found-state ion-icon {
+  color: #dc2626;
+}
+
+.not-found-state h3 {
+  color: #991b1b;
+}
+
+.not-found-state p {
+  color: #7f1d1d;
+}

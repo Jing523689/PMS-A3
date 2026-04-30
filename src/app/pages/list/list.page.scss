@@ -1,0 +1,60 @@
+/* Inventory page styles focus on search controls and card-list scanning. */
+@use '../../styles/modern-page' as *;
+
+.inventory-page {
+  padding-top: 14px;
+}
+
+.search-panel ion-searchbar {
+  margin-top: 12px;
+}
+
+.search-actions {
+  margin-top: 14px;
+}
+
+ion-segment {
+  margin-top: 10px;
+  --background: rgba(226, 232, 240, 0.62);
+  border-radius: 18px;
+  padding: 4px;
+}
+
+ion-segment-button {
+  --indicator-color: #ffffff;
+  --color: #64748b;
+  --color-checked: #2563eb;
+  min-height: 40px;
+  font-weight: 850;
+}
+
+ion-segment-button ion-icon {
+  margin-bottom: 2px;
+  font-size: 1rem;
+}
+
+.selected-card {
+  border-color: rgba(37, 99, 235, 0.32);
+  box-shadow: 0 22px 52px rgba(37, 99, 235, 0.14);
+}
+
+.manage-link {
+  margin-top: 12px;
+  --color: #2563eb;
+  font-weight: 850;
+}
+
+
+/* UI v4 inventory polish */
+.search-panel {
+  border-color: rgba(37, 99, 235, 0.14);
+}
+
+.search-panel ion-searchbar {
+  margin-top: 14px;
+}
+
+.search-actions ion-button[fill="outline"] {
+  --border-color: rgba(37, 99, 235, 0.24);
+  --color: #2563eb;
+}

@@ -1,0 +1,126 @@
+/* Privacy page styles present security content as readable mobile cards. */
+@use '../../styles/modern-page' as *;
+
+.privacy-page {
+  padding-top: 14px;
+}
+
+.summary-card ion-card-content {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.summary-icon,
+.topic-icon {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 17px;
+  background: rgba(37, 99, 235, 0.11);
+  color: #2563eb;
+}
+
+.summary-icon ion-icon,
+.topic-icon ion-icon {
+  font-size: 1.4rem;
+}
+
+.summary-card h2,
+.info-card h2 {
+  margin: 0 0 8px;
+  color: var(--text-strong);
+  font-size: 1.06rem;
+  font-weight: 950;
+  letter-spacing: -0.025em;
+}
+
+.summary-card p,
+.info-card p {
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.65;
+}
+
+.privacy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.info-card {
+  position: relative;
+  margin: 0;
+  border-radius: 26px;
+  overflow: hidden;
+}
+
+.info-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 5px;
+  background: linear-gradient(90deg, #2563eb, #14b8a6);
+  opacity: 0.82;
+}
+
+.info-card ion-card-content {
+  padding: 22px 18px 18px;
+}
+
+.topic-icon {
+  margin-bottom: 15px;
+}
+
+@media (max-width: 520px) {
+  .summary-card ion-card-content {
+    flex-direction: column;
+  }
+}
+
+
+/* UI v4 privacy polish */
+.summary-card {
+  border-color: rgba(37, 99, 235, 0.14);
+}
+
+.topic-icon {
+  box-shadow: 0 12px 22px rgba(37, 99, 235, 0.12);
+}
+
+.info-card p {
+  font-size: 0.93rem;
+}
+
+/* UI v7 page-specific typography alignment */
+.summary-card h2,
+.info-card h2 {
+  font-size: var(--type-form-title);
+  font-weight: 780;
+  line-height: var(--line-title);
+  letter-spacing: -0.02em;
+}
+
+.summary-card p,
+.info-card p {
+  font-size: var(--type-body);
+  line-height: var(--line-body);
+  font-weight: 500;
+}
+
+
+/* UI v10 clean surface overrides */
+.info-card::before {
+  display: none !important;
+  background: none !important;
+}
+
+.summary-icon,
+.topic-icon {
+  background: #eff6ff !important;
+  color: #1d4ed8 !important;
+  border: 1px solid #bfdbfe !important;
+  box-shadow: none !important;
+}

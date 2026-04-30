@@ -1,0 +1,43 @@
+<!-- Privacy toolbar: page title plus contextual help. -->
+<ion-header class="app-top-header" [translucent]="true">
+  <ion-toolbar class="app-top-toolbar">
+    <ion-title>Privacy</ion-title>
+    <ion-buttons slot="end">
+      <app-help-widget title="Privacy and security help" [message]="helpMessage"></app-help-widget>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Privacy content: mobile cards explain safety principles in small chunks. -->
+<ion-content [fullscreen]="true" class="glass-page">
+  <main class="page-shell page-container privacy-page">
+    <!-- Summary card connects the UI implementation to the assessment requirements. -->
+    <ion-card class="surface-card summary-card">
+      <ion-card-content>
+        <div class="summary-icon">
+          <ion-icon name="server-outline"></ion-icon>
+        </div>
+        <div>
+          <h2>Assessment alignment</h2>
+          <p>
+            The app validates user input, communicates with the remote REST API, gives clear feedback for updates and deletions,
+            and avoids unnecessary local storage or device permissions.
+          </p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Data-driven cards come from the topics array in privacy.page.ts. -->
+    <div class="privacy-grid">
+      <ion-card class="info-card" *ngFor="let topic of topics; trackBy: trackByTitle">
+        <ion-card-content>
+          <div class="topic-icon">
+            <ion-icon [name]="topic.icon"></ion-icon>
+          </div>
+          <h2>{{ topic.title }}</h2>
+          <p>{{ topic.body }}</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </main>
+</ion-content>

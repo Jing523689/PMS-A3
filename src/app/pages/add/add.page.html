@@ -1,0 +1,209 @@
+<!-- Top toolbar: shows the page title, help access, and save progress feedback. -->
+<ion-header class="app-top-header" [translucent]="true">
+  <ion-toolbar class="app-top-toolbar">
+    <ion-title>Add Item</ion-title>
+    <ion-buttons slot="end">
+      <app-help-widget title="Add item help" [message]="helpMessage"></app-help-widget>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-progress-bar *ngIf="submitting" type="indeterminate"></ion-progress-bar>
+</ion-header>
+
+<!-- Main content: mobile-first add workflow and featured showcase. -->
+<ion-content [fullscreen]="true" class="glass-page">
+  <main class="page-shell page-container add-page">
+    <ion-card class="form-card polished-form-card add-flow-card">
+      <ion-card-content>
+        <!-- Reactive form: Angular validation controls all Ionic input elements. -->
+        <form [formGroup]="itemForm" (ngSubmit)="submitForm()" class="inventory-form">
+          <!-- Product details: all required inventory fields are grouped into one clear card. -->
+          <section class="form-section-card product-flow-section">
+            <div class="form-section-title refined-title-row">
+              <span class="section-badge">01</span>
+              <div>
+                <h2>Product details</h2>
+              </div>
+            </div>
+
+            <ion-list class="form-list refined-form-list">
+              <!-- Item Name uses varchar-style text input and must be unique on the server. -->
+              <ion-item class="field-control premium-field">
+                <ion-icon slot="start" name="pricetag-outline" class="field-leading-icon"></ion-icon>
+                <ion-label position="stacked">
+                  <span class="field-label-text">Item Name <span class="required-mark">*</span></span>
+                </ion-label>
+                <ion-input class="value-input" formControlName="itemName" placeholder="Enter varchar" [clearInput]="true"></ion-input>
+              </ion-item>
+              <ion-note color="danger" class="validation-note" *ngIf="isInvalid('itemName')">
+                {{ fieldError('itemName') }}
+              </ion-note>
+
+              <!-- Category is an enum field, so ion-select prevents invalid free-text values. -->
+              <ion-item class="field-control premium-field">
+                <ion-icon slot="start" name="albums-outline" class="field-leading-icon"></ion-icon>
+                <ion-label position="stacked">
+                  <span class="field-label-text">Category <span class="required-mark">*</span></span>
+                </ion-label>
+                <ion-select class="value-input" formControlName="category" interface="action-sheet">
+                  <ion-select-option *ngFor="let category of categories" [value]="category">
+                    {{ category }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-note color="danger" class="validation-note" *ngIf="isInvalid('category')">
+                {{ fieldError('category') }}
+              </ion-note>
+
+              <!-- Quantity and Price are paired to reduce scrolling while preserving readable labels. -->
+              <div class="double-field refined-grid">
+                <div>
+                  <ion-item class="field-control compact-number-field premium-field metric-field">
+                    <ion-icon slot="start" name="cube-outline" class="field-leading-icon"></ion-icon>
+                    <ion-label position="stacked">
+                      <span class="field-label-text">Quantity <span class="required-mark">*</span></span>
+                    </ion-label>
+                    <ion-input class="value-input numeric-value" type="number" inputmode="numeric" formControlName="quantity" placeholder="Enter integer"></ion-input>
+                  </ion-item>
+                  <ion-note color="danger" class="validation-note" *ngIf="isInvalid('quantity')">
+                    {{ fieldError('quantity') }}
+                  </ion-note>
+                </div>
+
+                <div>
+                  <ion-item class="field-control compact-number-field premium-field metric-field">
+                    <ion-icon slot="start" name="cash-outline" class="field-leading-icon"></ion-icon>
+                    <ion-label position="stacked">
+                      <span class="field-label-text">Price <span class="required-mark">*</span></span>
+                    </ion-label>
+                    <ion-input class="value-input numeric-value" type="number" inputmode="decimal" formControlName="price" placeholder="Enter decimal"></ion-input>
+                  </ion-item>
+                  <ion-note color="danger" class="validation-note" *ngIf="isInvalid('price')">
+                    {{ fieldError('price') }}
+                  </ion-note>
+                </div>
+              </div>
+
+              <!-- Stock Status stays inside the main form so status is visible during data entry. -->
+              <ion-item class="field-control premium-field status-field">
+                <ion-icon slot="start" name="pulse-outline" class="field-leading-icon status-icon"></ion-icon>
+                <ion-label position="stacked">
+                  <span class="field-label-text">Stock Status <span class="required-mark">*</span></span>
+                </ion-label>
+                <ion-select class="value-input" formControlName="stockStatus" interface="action-sheet">
+                  <ion-select-option *ngFor="let status of stockStatuses" [value]="status">
+                    {{ status }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-note color="danger" class="validation-note" *ngIf="isInvalid('stockStatus')">
+                {{ fieldError('stockStatus') }}
+              </ion-note>
+
+              <!-- Supplier Name records where the stock comes from. -->
+              <ion-item class="field-control premium-field">
+                <ion-icon slot="start" name="business-outline" class="field-leading-icon"></ion-icon>
+                <ion-label position="stacked">
+                  <span class="field-label-text">Supplier Name <span class="required-mark">*</span></span>
+                </ion-label>
+                <ion-input class="value-input" formControlName="supplierName" placeholder="Enter varchar" [clearInput]="true"></ion-input>
+              </ion-item>
+              <ion-note color="danger" class="validation-note" *ngIf="isInvalid('supplierName')">
+                {{ fieldError('supplierName') }}
+              </ion-note>
+
+              <!-- Featured toggle maps to the API featured_item numeric flag. -->
+              <ion-item class="field-control toggle-control premium-field feature-toggle-field">
+                <ion-icon slot="start" name="star-outline" class="field-leading-icon featured-icon"></ion-icon>
+                <ion-label>
+                  <span class="field-label-text">Featured Item</span>
+                </ion-label>
+                <ion-toggle formControlName="featuredToggle" aria-label="Featured item"></ion-toggle>
+              </ion-item>
+
+              <!-- Special Note is optional and supports longer text with auto-growing textarea. -->
+              <ion-item class="field-control textarea-control premium-field note-field">
+                <ion-icon slot="start" name="document-text-outline" class="field-leading-icon"></ion-icon>
+                <ion-label position="stacked">
+                  <span class="field-label-text">Special Note</span>
+                </ion-label>
+                <ion-textarea class="value-input" formControlName="specialNote" rows="4" [autoGrow]="true" placeholder="Enter text"></ion-textarea>
+              </ion-item>
+              <ion-note color="danger" class="validation-note" *ngIf="isInvalid('specialNote')">
+                {{ fieldError('specialNote') }}
+              </ion-note>
+            </ion-list>
+          </section>
+
+          <!-- Primary actions are placed after the form for a natural mobile completion flow. -->
+          <div class="button-row form-actions-row elevated-actions">
+            <ion-button expand="block" type="submit" class="primary-action" [disabled]="submitting">
+              <ion-icon slot="start" name="save-outline"></ion-icon>
+              {{ submitting ? 'Saving...' : 'Add Item' }}
+            </ion-button>
+            <ion-button expand="block" type="button" fill="outline" class="primary-action secondary-action" (click)="resetForm()" [disabled]="submitting">
+              <ion-icon slot="start" name="refresh-outline"></ion-icon>
+              Clear Form
+            </ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Featured showcase: uses the same information-card pattern as the Inventory tab. -->
+    <section>
+      <div class="section-heading showcase-heading">
+        <div>
+          <h2>Featured showcase</h2>
+          <p>Featured inventory records with the same card style as the Inventory tab.</p>
+        </div>
+        <ion-button size="small" fill="clear" class="mini-text-button" (click)="loadFeaturedItems()">
+          Refresh
+        </ion-button>
+      </div>
+
+      <!-- Loading and empty states give users feedback instead of leaving blank space. -->
+      <div class="loading-box" *ngIf="loadingFeatured">
+        <ion-spinner name="crescent"></ion-spinner>
+        <span>Loading featured items...</span>
+      </div>
+
+      <div *ngIf="!loadingFeatured && featuredItems.length === 0" class="empty-state">
+        <ion-icon name="star-outline"></ion-icon>
+        <h3>No featured items yet</h3>
+        <p>Use the Featured Item switch when adding or editing a record to display it here.</p>
+      </div>
+
+      <!-- Cards use trackBy for efficient rendering when the showcase refreshes. -->
+      <div class="item-grid" *ngIf="!loadingFeatured && featuredItems.length > 0">
+        <ion-card class="item-card" *ngFor="let item of featuredItems; trackBy: trackByItemName">
+          <ion-card-header>
+            <div class="card-title-row">
+              <div>
+                <ion-card-title>{{ item.itemName || 'Unnamed Item' }}</ion-card-title>
+                <ion-card-subtitle>{{ item.category }}</ion-card-subtitle>
+              </div>
+              <ion-icon name="star" class="card-feature-icon"></ion-icon>
+            </div>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="item-meta">
+              <div class="meta-pill"><span>Qty</span><strong>{{ item.quantity }}</strong></div>
+              <div class="meta-pill"><span>Price</span><strong>{{ item.price }}</strong></div>
+              <div class="meta-pill"><span>Supplier</span><strong>{{ item.supplierName || '-' }}</strong></div>
+              <div class="meta-pill"><span>ID</span><strong>{{ item.itemId || '-' }}</strong></div>
+            </div>
+            <div class="status-row">
+              <span class="status-chip" [ngClass]="statusClass(item)">{{ item.stockStatus }}</span>
+              <span class="status-chip featured-chip">Featured</span>
+            </div>
+            <p class="note-text" *ngIf="item.specialNote">{{ item.specialNote }}</p>
+            <ion-button expand="block" fill="clear" class="manage-link" (click)="manageItem(item)">
+              Manage
+              <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </section>
+  </main>
+</ion-content>

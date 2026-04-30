@@ -4,8 +4,9 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  standalone: false,
+  standalone: false
 })
 export class AppComponent {
-  constructor() {}
+  // Root component only hosts the Ionic router outlet.
+  // Feature logic is kept inside page components and services for cleaner architecture.
 }
